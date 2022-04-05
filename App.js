@@ -56,14 +56,17 @@ const Section = ({ children, title }) => {
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
+  // To keep state of textBox for saving it into async
   const [state, setState] = useState();
 
+  // To store all added values into async-storage
   const [stateData, setStateData] = useState([]);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // To keep string value from textBox
   const storeData = async () => {
     try {
       await AsyncStorage.setItem('@storage_Key', state)
@@ -73,6 +76,7 @@ const App = () => {
     }
   }
 
+  // To keep object from textBox
   const storeDataObj = async (value) => {
     try {
       setStateData([...stateData, state]);
@@ -84,6 +88,7 @@ const App = () => {
     }
   }
 
+  // To retrieve string value from async-storage
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@storage_Key')
@@ -97,6 +102,7 @@ const App = () => {
     }
   }
 
+  // To retrieve object from async-storage
   const getDataObj = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@storage_Key')
@@ -120,8 +126,10 @@ const App = () => {
           }}>
           <Section title="HP technical task:">
           </Section>
+          {/* textBot for getting input from user */}
           <TextInput onChangeText={setState} value={state}></TextInput>
           <View style={{marginTop: 20}}>
+            {/* to save given input into async-storage */}
             <Button title='Save data' onPress={storeDataObj}></Button>
             <Button title='Get data on console' onPress={getDataObj}></Button>
           </View>
